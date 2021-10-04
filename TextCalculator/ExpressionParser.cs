@@ -4,12 +4,12 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 namespace TextCalculator
-{
+{//\d+(\.\d+)?\*(\d+(\.\d+)?)
     public class ExpressionParser
     {
         private readonly string allOperandsPattern = @"\d+(\.\d+)?";
-        private readonly string expressionsBetweenExternalBracketsPattern = @"(\(.+\))";
-        private readonly string expressionsBetweenBracketsInsideExternalBracketsPattern = @"\(([^()]*)\)";
+        private readonly string subexpressionsBetweenExternalBracketsPattern = @"(\(.+\))";
+        private readonly string subexpressionsBetweenBracketsInsideExternalBracketsPattern = @"\(([^()]*)\)";
 
         private MatchCollection ReturnMatchCollection(string pattern, string expression) => new Regex(pattern).Matches(expression);
 
@@ -18,20 +18,18 @@ namespace TextCalculator
 
         }
 
-        private string FindAllExpressionsInsideExternalBrackets(string expression)
+        public List<string> FindAllSubexpressionsInsideExternalBrackets(string expression)
         {
-            var matches = ReturnMatchCollection(expressionsBetweenExternalBracketsPattern, expression);
+            var matches = ReturnMatchCollection(subexpressionsBetweenBracketsInsideExternalBracketsPattern, expression);
 
-            foreach(Match match in matches)
+            var subexpressionsList = new List<string>();
+
+            foreach (Match match in matches)
             {
-                FindAllExpressionsInsideExternalBrackets(match.Value);
+                subexpressionsList.Add(match.Value);
             }
-            return "hah";
-        }
 
-        private void FindExpressionsBetweenBrackets(string expression)
-        {
-            var matches = ReturnMatchCollection(expressionsBetweenBracketsInsideExternalBracketsPattern, expression);
+            return subexpressionsList;
         }
 
         public List<double> FindOperands(string expression)

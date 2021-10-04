@@ -25,19 +25,17 @@ namespace TextCalculator.Tests
         }
 
         [Theory]
-        [InlineData("1+(2+(3+4))", "1+9")]
-        [InlineData("1+(2+(3-4))", "1+1")]
-        [InlineData("1*(2+(3+4))", "1*9")]
-        [InlineData("1+1*(2+(3*4))", "1+1*14")]
-        [InlineData("(1+1)*(4-2)/(5+1)", "2*2/4")]
-        public void Simplify_Expression_ReturnSimplifiedStringExpression(string expression, string simplifiedExpression)
+        [InlineData("((6/3+1.1)*(2+3)*(4-2))", new string[] { "(6/3+1.1)", "(2+3)", "(4-2)"})]
+        public void Find_Exression_ReturnSubexpressionsBetweenBrackets(string expression, string[] expectedSubexpressions)
         {
             // Arrange
             var parser = new ExpressionParser();
-            
+
             // Act
+            var actualSubexpressions = parser.FindAllSubexpressionsInsideExternalBrackets(expression).ToArray();
 
             // Assert
+            Assert.Equal(expectedSubexpressions, actualSubexpressions);
         }
     }
 }
