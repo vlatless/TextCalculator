@@ -9,13 +9,16 @@ namespace TextCalculator.Tests
     {
         [Theory]
         [InlineData("1+(2+3)*(4+5)", 101)]
-        public void Calculate_Expression_ReturnTrue(string expression, int result)
-        { 
+        public void Calculate_Expression_ReturnTrue(string expression, int expectedResult)
+        {
             // Arrange
+            var calculator = new Calculator();
 
             // Act
+            var actualResult = calculator.CalculateExpression();
 
             // Assert
+            Assert.Equal(expectedResult, actualResult);
         }
     }
 }
