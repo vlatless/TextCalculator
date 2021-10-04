@@ -4,23 +4,17 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 namespace TextCalculator
-{//\d+(\.\d+)?\*(\d+(\.\d+)?)
+{//@"\d+(\.\d+)?\*\d+(\.\d+)?"
     public class ExpressionParser
     {
-        private readonly string allOperandsPattern = @"\d+(\.\d+)?";
-        private readonly string subexpressionsBetweenExternalBracketsPattern = @"(\(.+\))";
-        private readonly string subexpressionsBetweenBracketsInsideExternalBracketsPattern = @"\(([^()]*)\)";
+        private readonly string operandsPattern = @"\d+(\.\d+)?";
+        private readonly string subexpressionsBetweenBracketsInsideBracketsPattern = @"\(([^()]*)\)";
 
         private MatchCollection ReturnMatchCollection(string pattern, string expression) => new Regex(pattern).Matches(expression);
 
-        public void ParseExpression(string expression)
-        {
-
-        }
-
         public List<string> FindAllSubexpressionsInsideExternalBrackets(string expression)
         {
-            var matches = ReturnMatchCollection(subexpressionsBetweenBracketsInsideExternalBracketsPattern, expression);
+            var matches = ReturnMatchCollection(subexpressionsBetweenBracketsInsideBracketsPattern, expression);
 
             var subexpressionsList = new List<string>();
 
@@ -32,17 +26,14 @@ namespace TextCalculator
             return subexpressionsList ?? new List<string>();
         }
 
-        public List<double> FindOperands(string expression)
+        public (double, double) FindTwoOperandsByPriority(string expression, string currentByPrioriry)
         {
-            var matches = ReturnMatchCollection(allOperandsPattern, expression);
-            var operandsList = new List<double>();
+            var matches = ReturnMatchCollection($"{operandsPattern}\\{currentByPrioriry}{operandsPattern}", expression);
 
-            foreach (Match match in matches)
-            {
-                operandsList.Add(double.Parse(match.Value));
-            }
-
-            return operandsList ?? new List<double>();
+            return (
+                double.Parse(matches[0].Value),
+                double.Parse(matches[1].Value)
+                );
         }
     }
 }

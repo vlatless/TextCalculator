@@ -15,7 +15,7 @@ namespace TextCalculator.Tests
             var calculator = new Calculator();
 
             // Act
-            var actualResult = calculator.CalculateExpression();
+            var actualResult = calculator.CalculateExpression(expression);
 
             // Assert
             Assert.Equal(expectedResult, actualResult);
