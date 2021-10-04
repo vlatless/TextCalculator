@@ -12,7 +12,7 @@ namespace TextCalculator.Tests
         [InlineData("1-1", new double[] { 1d, 1d })]
         [InlineData("1*1-1.1", new double[] { 1d, 1d, 1.1d })]
         [InlineData("1*1+1.111", new double[] { 1d, 1d, 1.111d })]
-        public void Expression_Operation_ReturnsOperands(string input, double[] expectedOperands)
+        public void Parse_Expression_ReturnsOperandsArray(string input, double[] expectedOperands)
         {
             // Arrange 
             var parser = new ExpressionParser();
@@ -22,6 +22,17 @@ namespace TextCalculator.Tests
 
             // Assert
             Assert.Equal(expectedOperands, actualOperands);
+        }
+
+        [Theory]
+        [InlineData("1+(2+(3+4))", "1+2+7")]
+        public void Simplify_Expression_ReturnSimplifiedStringExpression(string expression, string simplifiedExpression)
+        { 
+            // Arrange
+
+            // Act
+
+            // Assert
         }
     }
 }
