@@ -29,7 +29,7 @@ namespace TextCalculator
                 subexpressionsList.Add(match.Value);
             }
 
-            return subexpressionsList;
+            return subexpressionsList ?? new List<string>();
         }
 
         public List<double> FindOperands(string expression)
@@ -42,7 +42,7 @@ namespace TextCalculator
                 operandsList.Add(double.Parse(match.Value));
             }
 
-            return operandsList;
+            return operandsList ?? new List<double>();
         }
     }
 }
