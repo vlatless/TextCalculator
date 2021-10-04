@@ -25,11 +25,16 @@ namespace TextCalculator.Tests
         }
 
         [Theory]
-        [InlineData("1+(2+(3+4))", "1+2+7")]
+        [InlineData("1+(2+(3+4))", "1+9")]
+        [InlineData("1+(2+(3-4))", "1+1")]
+        [InlineData("1*(2+(3+4))", "1*9")]
+        [InlineData("1+1*(2+(3*4))", "1+1*14")]
+        [InlineData("(1+1)*(4-2)/(5+1)", "2*2/4")]
         public void Simplify_Expression_ReturnSimplifiedStringExpression(string expression, string simplifiedExpression)
-        { 
+        {
             // Arrange
-
+            var parser = new ExpressionParser();
+            
             // Act
 
             // Assert
