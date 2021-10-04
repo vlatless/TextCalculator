@@ -4,11 +4,11 @@ using System.Text;
 
 namespace TextCalculator
 {
-    public class OperationsPriority
+    public static class OperationsPriority
     {
-        public List<OperationItem> priorities { get; private set; }
+        public static List<OperationItem> priorities { get; private set; }
 
-        public OperationsPriority()
+        static OperationsPriority()
         {
             priorities = new List<OperationItem>
             {
