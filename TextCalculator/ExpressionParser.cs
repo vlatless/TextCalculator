@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 namespace TextCalculator
 {
     public class ExpressionParser
-    {
+    {//(\+|\-)?
         private readonly string operandsPattern = @"\d+(\.\d+)?";
         private readonly string subexpressionsBetweenBracketsInsideBracketsPattern = @"\(([^()]*)\)";
 

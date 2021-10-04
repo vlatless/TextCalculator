@@ -31,6 +31,16 @@ namespace TextCalculator
                 {
                     OperationSign = "-",
                     Operation = (double p1, double p2) =>  p1 - p2
+                },
+                new OperationItem()
+                {
+                    OperationSign = "+-",
+                    Operation = (double p1, double p2) =>  p1 - p2
+                },
+                new OperationItem()
+                {
+                    OperationSign = "--",
+                    Operation = (double p1, double p2) =>  p1 + p2
                 }
             };
         }
