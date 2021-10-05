@@ -22,5 +22,35 @@ namespace TextCalculator.Tests
             // Assert
             Assert.Equal(expectedResult, actualResult);
         }
+
+        [Theory]
+        [InlineData("1+2+3", 6d)]
+        public void Calculate_ExpressionWithNoBrackets_ReturnTrue(string expression, double expectedResult)
+        { 
+        }
+
+        [Theory]
+        [InlineData("1+(2-3)", 0d)]
+        public void Calculate_ExpressionWithBrackets_ReturnTrue(string expression, double expectedResult)
+        {
+        }
+
+        [Theory]
+        [InlineData("1+2+3+4", 10d)]
+        public void Calculate_ExpressionWithOnlySum_ReturnTrue(string expression, double expectedResult)
+        {
+        }
+
+        [Theory]
+        [InlineData("1-2-3-4", -10d)]
+        public void Calculate_ExpressionWithOnlySub_ReturnTrue(string expression, double expectedResult)
+        {
+        }
+
+        [Theory]
+        [InlineData("((3-1) + (2-1)*(4-1))", 5d)]
+        public void Calculate_ExpressionWithOnlyBrackets_ReturnTrue(string expression, double expectedResult)
+        {
+        }
     }
 }
