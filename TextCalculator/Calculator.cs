@@ -7,7 +7,7 @@ namespace TextCalculator
     public class Calculator
     {
         private readonly string deleleAllBracketsPattern = @"\(|\)";
-        private readonly int MIN_NUMBER_OPERANDS = 1;
+        private readonly int MIN_NUMBER_OPERANDS = 2;
         private ExpressionParser parser;
         private List<OperationItem> priorities;
 
@@ -19,19 +19,19 @@ namespace TextCalculator
 
         public double CalculateExpression(string expression)
         {
-            var subexpressions = parser.FindAllSubexpressionsInsideExternalBrackets(expression);
+            //var subexpressions = parser.FindAllSubexpressionsInsideExternalBrackets(expression);
 
-            foreach (var subexpression in subexpressions)
-            {
+            //foreach (var subexpression in subexpressions)
+            //{
                 foreach (var priority in priorities)
                 {
-                    var matchedOperands = parser.FindOperandsByPriority(subexpression, priority.OperationSign);
-                    var operandCount = parser.CountOperands(subexpression);
+                    var matchedOperands = parser.FindOperandsByPriority(expression, priority.OperationSign);
+                    var operandCount = parser.CountOperands(expression);
 
                     if (operandCount == MIN_NUMBER_OPERANDS)
                     {
-                        var lonelyOperand = Regex.Replace(subexpression, deleleAllBracketsPattern, string.Empty);
-                        expression = expression.Replace(subexpression, lonelyOperand);
+                        var lonelyOperand = Regex.Replace(expression, deleleAllBracketsPattern, string.Empty);
+                        expression = expression.Replace(expression, lonelyOperand);
                     }
                     if (!matchedOperands.Any())
                         continue;
@@ -40,14 +40,15 @@ namespace TextCalculator
                     var subresultAsExpression = $"{matchedOperands[0]}{priority.OperationSign}{matchedOperands[1]}";
 
                     expression = expression.Replace(subresultAsExpression, subresult);
+                    break;
                 }
-            }
+            //}
 
-            if (parser.CountOperands(expression) == MIN_NUMBER_OPERANDS)
+            if (parser.CountOperands(expression) == 1)
             {
-                var result = Regex.Replace(expression, deleleAllBracketsPattern, string.Empty);
+                //var result = Regex.Replace(expression, deleleAllBracketsPattern, string.Empty);
 
-                return double.Parse(result);
+                return double.Parse(expression);
             }
             else
             {
